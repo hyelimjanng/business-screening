@@ -13,54 +13,106 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: #f7f8fa;
-            color: #222;
+            color: #263043;
+
+            background:
+                radial-gradient(circle at 15% 15%, #e9e1ff 0%, transparent 30%),
+                radial-gradient(circle at 85% 20%, #dff8ee 0%, transparent 30%),
+                radial-gradient(circle at 80% 85%, #ffe7df 0%, transparent 30%),
+                linear-gradient(135deg, #f7f8fc, #f2f5fa);
+
+            min-height: 100vh;
         }
 
         .page {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 40px 28px 60px;
+            padding: 46px 28px 70px;
         }
+
+        /* 상단 제목 */
 
         .header {
             margin-bottom: 30px;
         }
 
         .header h1 {
-            margin: 0 0 8px;
-            font-size: 32px;
+            margin: 0 0 10px;
+            font-size: 34px;
+            letter-spacing: -1px;
+            color: #222b45;
         }
 
         .header p {
             margin: 0;
-            color: #666;
+            color: #768099;
+            font-size: 15px;
         }
+
+
+        /* 요약 카드 */
 
         .summary {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
+            gap: 18px;
             margin-bottom: 26px;
         }
 
         .summary-card {
-            background: white;
-            border: 1px solid #e4e6eb;
-            border-radius: 12px;
-            padding: 20px;
+            position: relative;
+            overflow: hidden;
+
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 18px;
+            padding: 23px;
+
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+
+            box-shadow:
+                0 14px 35px rgba(80, 90, 130, 0.10),
+                inset 0 1px 0 rgba(255,255,255,0.8);
+
+            transition: transform 0.25s ease,
+                        box-shadow 0.25s ease;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 20px 40px rgba(80, 90, 130, 0.16),
+                inset 0 1px 0 rgba(255,255,255,0.9);
+        }
+
+        .summary-card.total {
+            background: rgba(229, 222, 255, 0.68);
+        }
+
+        .summary-card.open {
+            background: rgba(216, 247, 234, 0.72);
+        }
+
+        .summary-card.closed {
+            background: rgba(255, 228, 220, 0.72);
         }
 
         .summary-card .label {
             font-size: 14px;
-            color: #777;
-            margin-bottom: 8px;
+            color: #69738b;
+            margin-bottom: 10px;
+            font-weight: 600;
         }
 
         .summary-card .number {
-            font-size: 30px;
-            font-weight: bold;
+            font-size: 34px;
+            font-weight: 700;
+            color: #293149;
         }
+
+
+        /* 검색창 */
 
         .toolbar {
             display: flex;
@@ -68,119 +120,213 @@
             margin-bottom: 26px;
         }
 
-        .search-box {
-            flex: 1;
-            padding: 12px 14px;
-            border: 1px solid #dfe1e5;
-            border-radius: 9px;
-            background: white;
+        .search-box,
+        .select-box {
+            border: 1px solid rgba(255,255,255,0.8);
+            background: rgba(255,255,255,0.65);
+
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+
+            box-shadow: 0 8px 22px rgba(80,90,130,0.08);
+
+            border-radius: 12px;
+            padding: 13px 15px;
+
+            color: #424b61;
             font-size: 14px;
+
+            outline: none;
         }
 
-        .select-box {
-            padding: 12px 14px;
-            border: 1px solid #dfe1e5;
-            border-radius: 9px;
-            background: white;
+        .search-box {
+            flex: 1;
         }
+
+        .search-box:focus,
+        .select-box:focus {
+            border-color: #b8aae9;
+            box-shadow: 0 0 0 4px rgba(184,170,233,0.15);
+        }
+
+
+        /* 보드 */
 
         .board {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 22px;
+            gap: 24px;
             align-items: start;
         }
 
         .column {
-            background: #f0f2f5;
-            border-radius: 14px;
-            padding: 16px;
-            min-height: 500px;
+            border-radius: 20px;
+            padding: 18px;
+            min-height: 520px;
+
+            border: 1px solid rgba(255,255,255,0.75);
+
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+
+            box-shadow:
+                0 16px 40px rgba(80,90,130,0.09),
+                inset 0 1px 0 rgba(255,255,255,0.7);
         }
+
+        .column.open-column {
+            background: rgba(222, 247, 237, 0.50);
+        }
+
+        .column.closed-column {
+            background: rgba(255, 232, 226, 0.50);
+        }
+
+
+        /* 컬럼 제목 */
 
         .column-title {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
+            padding: 4px 3px;
         }
 
         .column-title h2 {
             font-size: 18px;
             margin: 0;
+            color: #30384d;
         }
 
         .count {
-            font-size: 13px;
-            color: #777;
-            background: white;
+            font-size: 12px;
+            color: #626b80;
+
+            background: rgba(255,255,255,0.7);
+            border: 1px solid rgba(255,255,255,0.85);
+
             border-radius: 20px;
-            padding: 5px 9px;
+            padding: 6px 10px;
+
+            box-shadow: 0 4px 12px rgba(80,90,130,0.07);
         }
 
+
+        /* 공고 카드 */
+
         .notice-card {
-            background: white;
-            border: 1px solid #e1e4e8;
-            border-radius: 10px;
-            padding: 18px;
-            margin-bottom: 14px;
+            position: relative;
+
+            background: rgba(255,255,255,0.76);
+
+            border: 1px solid rgba(255,255,255,0.9);
+            border-radius: 15px;
+
+            padding: 20px;
+            margin-bottom: 15px;
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 10px 25px rgba(65,75,110,0.10),
+                0 2px 5px rgba(65,75,110,0.05),
+                inset 0 1px 0 rgba(255,255,255,0.95);
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
         }
+
+        .notice-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 18px 36px rgba(65,75,110,0.16),
+                0 5px 10px rgba(65,75,110,0.07),
+                inset 0 1px 0 rgba(255,255,255,1);
+        }
+
+
+        /* 상태 뱃지 */
 
         .status {
             display: inline-block;
             border-radius: 20px;
-            padding: 5px 9px;
+            padding: 6px 10px;
             font-size: 12px;
-            font-weight: bold;
-            margin-bottom: 12px;
+            font-weight: 700;
+            margin-bottom: 13px;
         }
 
         .status.open {
-            background: #e8f7ef;
-            color: #16834b;
+            background: rgba(190, 238, 214, 0.75);
+            color: #257a54;
         }
 
         .status.closed {
-            background: #eeeeee;
-            color: #666;
+            background: rgba(238, 219, 230, 0.75);
+            color: #806274;
         }
 
+
+        /* 카드 내부 */
+
         .notice-card h3 {
-            margin: 0 0 14px;
+            margin: 0 0 15px;
             font-size: 17px;
-            line-height: 1.45;
+            line-height: 1.5;
+            color: #293149;
         }
 
         .meta {
             font-size: 13px;
-            color: #666;
-            margin-bottom: 7px;
+            color: #6e778c;
+            margin-bottom: 8px;
         }
 
         .tag {
             display: inline-block;
             margin-top: 10px;
-            padding: 5px 8px;
-            border-radius: 6px;
-            background: #f4f4f4;
+
+            padding: 6px 9px;
+            border-radius: 8px;
+
+            background: rgba(225, 224, 249, 0.75);
+            color: #635f83;
+
             font-size: 12px;
-            color: #555;
         }
 
         .detail-link {
             display: block;
-            margin-top: 14px;
+            margin-top: 16px;
+
             font-size: 13px;
-            font-weight: bold;
-            color: #222;
+            font-weight: 700;
+
+            color: #56527f;
             text-decoration: none;
         }
 
         .detail-link:hover {
-            text-decoration: underline;
+            color: #332e69;
         }
 
+
+        /* 모바일 */
+
         @media (max-width: 800px) {
+
+            .page {
+                padding: 30px 18px 50px;
+            }
+
+            .header h1 {
+                font-size: 27px;
+            }
+
             .summary {
                 grid-template-columns: 1fr;
             }
@@ -193,6 +339,7 @@
                 flex-direction: column;
             }
         }
+
     </style>
 </head>
 
@@ -205,28 +352,33 @@
             <p>지원사업의 모집 현황을 한눈에 확인하세요.</p>
         </div>
 
+
         <div class="summary">
-            <div class="summary-card">
+
+            <div class="summary-card total">
                 <div class="label">전체 공고</div>
                 <div class="number">5</div>
             </div>
 
-            <div class="summary-card">
+            <div class="summary-card open">
                 <div class="label">모집중</div>
                 <div class="number">3</div>
             </div>
 
-            <div class="summary-card">
+            <div class="summary-card closed">
                 <div class="label">모집완료</div>
                 <div class="number">2</div>
             </div>
+
         </div>
 
+
         <div class="toolbar">
+
             <input
                 type="text"
                 class="search-box"
-                placeholder="공고명을 검색하세요"
+                placeholder="🔍 공고명을 검색하세요"
             >
 
             <select class="select-box">
@@ -234,135 +386,190 @@
                 <option>온라인 판로</option>
                 <option>마케팅</option>
                 <option>교육</option>
+                <option>컨설팅</option>
             </select>
+
         </div>
+
 
         <div class="board">
 
-            <section class="column">
+
+            <!-- 모집중 -->
+
+            <section class="column open-column">
 
                 <div class="column-title">
-                    <h2>🟢 모집중</h2>
-                    <span class="count">3건</span>
+
+                    <h2>🌿 모집중</h2>
+
+                    <span class="count">
+                        3건
+                    </span>
+
                 </div>
 
+
                 <div class="notice-card">
-                    <span class="status open">모집중</span>
+
+                    <span class="status open">
+                        모집중
+                    </span>
 
                     <h3>
                         2026년 소상공인 온라인 판로지원사업
                     </h3>
 
                     <div class="meta">
-                        모집기간 : 2026.08.01 ~ 2026.08.31
+                        📅 모집기간 : 2026.08.01 ~ 2026.08.31
                     </div>
 
                     <div class="meta">
-                        지원대상 : 소상공인
+                        👤 지원대상 : 소상공인
                     </div>
 
-                    <span class="tag">온라인 판로</span>
+                    <span class="tag">
+                        온라인 판로
+                    </span>
 
                     <a href="#" class="detail-link">
                         판판대로에서 보기 →
                     </a>
+
                 </div>
 
+
                 <div class="notice-card">
-                    <span class="status open">모집중</span>
+
+                    <span class="status open">
+                        모집중
+                    </span>
 
                     <h3>
                         2026년 온라인 판매 활성화 지원사업
                     </h3>
 
                     <div class="meta">
-                        모집기간 : 2026.08.10 ~ 2026.09.05
+                        📅 모집기간 : 2026.08.10 ~ 2026.09.05
                     </div>
 
                     <div class="meta">
-                        지원대상 : 온라인 판매 사업자
+                        👤 지원대상 : 온라인 판매 사업자
                     </div>
 
-                    <span class="tag">마케팅</span>
+                    <span class="tag">
+                        마케팅
+                    </span>
 
                     <a href="#" class="detail-link">
                         판판대로에서 보기 →
                     </a>
+
                 </div>
 
+
                 <div class="notice-card">
-                    <span class="status open">모집중</span>
+
+                    <span class="status open">
+                        모집중
+                    </span>
 
                     <h3>
                         라이브커머스 입점 지원사업
                     </h3>
 
                     <div class="meta">
-                        모집기간 : 2026.08.12 ~ 2026.09.15
+                        📅 모집기간 : 2026.08.12 ~ 2026.09.15
                     </div>
 
                     <div class="meta">
-                        지원대상 : 소상공인
+                        👤 지원대상 : 소상공인
                     </div>
 
-                    <span class="tag">온라인 판로</span>
+                    <span class="tag">
+                        온라인 판로
+                    </span>
 
                     <a href="#" class="detail-link">
                         판판대로에서 보기 →
                     </a>
+
                 </div>
 
             </section>
 
-            <section class="column">
+
+
+            <!-- 모집완료 -->
+
+            <section class="column closed-column">
 
                 <div class="column-title">
-                    <h2>⚪ 모집완료</h2>
-                    <span class="count">2건</span>
+
+                    <h2>🌸 모집완료</h2>
+
+                    <span class="count">
+                        2건
+                    </span>
+
                 </div>
 
+
                 <div class="notice-card">
-                    <span class="status closed">모집완료</span>
+
+                    <span class="status closed">
+                        모집완료
+                    </span>
 
                     <h3>
                         2026년 소상공인 마케팅 지원사업
                     </h3>
 
                     <div class="meta">
-                        모집기간 : 2026.07.01 ~ 2026.07.31
+                        📅 모집기간 : 2026.07.01 ~ 2026.07.31
                     </div>
 
                     <div class="meta">
-                        지원대상 : 소상공인
+                        👤 지원대상 : 소상공인
                     </div>
 
-                    <span class="tag">마케팅</span>
+                    <span class="tag">
+                        마케팅
+                    </span>
 
                     <a href="#" class="detail-link">
                         판판대로에서 보기 →
                     </a>
+
                 </div>
 
+
                 <div class="notice-card">
-                    <span class="status closed">모집완료</span>
+
+                    <span class="status closed">
+                        모집완료
+                    </span>
 
                     <h3>
                         온라인 입점 컨설팅 지원사업
                     </h3>
 
                     <div class="meta">
-                        모집기간 : 2026.06.20 ~ 2026.07.20
+                        📅 모집기간 : 2026.06.20 ~ 2026.07.20
                     </div>
 
                     <div class="meta">
-                        지원대상 : 소상공인
+                        👤 지원대상 : 소상공인
                     </div>
 
-                    <span class="tag">컨설팅</span>
+                    <span class="tag">
+                        컨설팅
+                    </span>
 
                     <a href="#" class="detail-link">
                         판판대로에서 보기 →
                     </a>
+
                 </div>
 
             </section>
