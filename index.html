@@ -2,22 +2,239 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>판판대로 사업공고 모아보기</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f7fa;
+            color: #222;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background-color: white;
+            padding: 50px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .header h1 {
+            margin: 0 0 12px;
+            font-size: 34px;
+        }
+
+        .header p {
+            margin: 0;
+            color: #666;
+            font-size: 16px;
+        }
+
+        .filters {
+            margin-top: 30px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .filter-button {
+            padding: 10px 18px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .filter-button.active {
+            background-color: #222;
+            color: white;
+            border-color: #222;
+        }
+
+        .content {
+            padding: 40px 0;
+        }
+
+        .section-title {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .notice-card {
+            background-color: white;
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 18px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 14px;
+        }
+
+        .status.open {
+            background-color: #e8f7ef;
+            color: #16834b;
+        }
+
+        .status.closed {
+            background-color: #f1f1f1;
+            color: #777;
+        }
+
+        .notice-card h2 {
+            margin: 0 0 18px;
+            font-size: 20px;
+        }
+
+        .info {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .detail-link {
+            display: inline-block;
+            margin-top: 16px;
+            text-decoration: none;
+            color: #222;
+            font-weight: bold;
+        }
+
+        .detail-link:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
 <body>
 
-    <h1>판판대로 사업공고 모아보기</h1>
+    <header class="header">
+        <div class="container">
 
-    <p>판판대로에 올라온 사업공고를 한눈에 확인해보세요.</p>
+            <h1>판판대로 사업공고</h1>
 
-    <h2>모집중</h2>
+            <p>
+                필요한 지원사업을 한눈에 확인하세요.
+            </p>
 
-    <p>현재 모집중인 사업공고가 여기에 표시됩니다.</p>
+            <div class="filters">
 
-    <h2>모집완료</h2>
+                <button class="filter-button active">
+                    전체
+                </button>
 
-    <p>모집이 완료된 사업공고가 여기에 표시됩니다.</p>
+                <button class="filter-button">
+                    모집중
+                </button>
+
+                <button class="filter-button">
+                    모집완료
+                </button>
+
+            </div>
+
+        </div>
+    </header>
+
+
+    <main class="content">
+
+        <div class="container">
+
+            <h2 class="section-title">
+                사업공고
+            </h2>
+
+
+            <div class="notice-card">
+
+                <span class="status open">
+                    모집중
+                </span>
+
+                <h2>
+                    2026년 소상공인 온라인 판로지원사업
+                </h2>
+
+                <div class="info">
+                    모집기간 : 2026.08.01 ~ 2026.08.31
+                </div>
+
+                <div class="info">
+                    지원대상 : 소상공인
+                </div>
+
+                <a href="#" class="detail-link">
+                    자세히 보기 →
+                </a>
+
+            </div>
+
+
+            <div class="notice-card">
+
+                <span class="status open">
+                    모집중
+                </span>
+
+                <h2>
+                    2026년 온라인 판매 활성화 지원사업
+                </h2>
+
+                <div class="info">
+                    모집기간 : 2026.08.10 ~ 2026.09.05
+                </div>
+
+                <div class="info">
+                    지원대상 : 온라인 판매 사업자
+                </div>
+
+                <a href="#" class="detail-link">
+                    자세히 보기 →
+                </a>
+
+            </div>
+
+
+            <div class="notice-card">
+
+                <span class="status closed">
+                    모집완료
+                </span>
+
+                <h2>
+                    2026년 소상공인 마케팅 지원사업
+                </h2>
+
+                <div class="info">
+                    모집기간 : 2026.07.01 ~ 2026.07.31
+                </div>
+
+                <div class="info">
+                    지원대상 : 소상공인
+                </div>
+
+                <a href="#" class="detail-link">
+                    자세히 보기 →
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </main>
 
 </body>
 </html>
