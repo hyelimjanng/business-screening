@@ -14,7 +14,6 @@
             --blue-900: #1e3a5f;
             --blue-700: #2563eb;
             --blue-500: #5b8def;
-            --blue-200: #cfe0ff;
             --blue-100: #eaf2ff;
             --blue-050: #f6f9ff;
 
@@ -53,9 +52,6 @@
             padding: 48px 28px 70px;
         }
 
-
-        /* 헤더 */
-
         .header {
             margin-bottom: 30px;
         }
@@ -73,9 +69,6 @@
             font-size: 15px;
             color: var(--text-sub);
         }
-
-
-        /* 요약 카드 */
 
         .summary {
             display: grid;
@@ -172,9 +165,6 @@
             color: var(--blue-900);
         }
 
-
-        /* 검색 */
-
         .toolbar {
             display: flex;
             gap: 12px;
@@ -198,53 +188,23 @@
                 0 5px 16px rgba(34, 50, 74, 0.04);
 
             outline: none;
-
-            transition:
-                border-color 0.2s ease,
-                box-shadow 0.2s ease;
         }
 
         .search-box {
             flex: 1;
         }
 
-        .search-box::placeholder {
-            color: #9aa6b8;
-        }
-
-        .search-box:focus,
-        .select-box:focus {
-            border-color: var(--blue-500);
-
-            box-shadow:
-                0 0 0 4px rgba(37, 99, 235, 0.09);
-        }
-
-
-        /* 보드 */
-
         .board {
             display: grid;
-
-            grid-template-columns:
-                minmax(0, 1fr)
-                minmax(0, 1fr);
-
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
             gap: 24px;
-
             align-items: start;
         }
 
-
-        /* 컬럼 */
-
         .column {
             min-height: 520px;
-
             padding: 18px;
-
             border-radius: 20px;
-
             border: 1px solid var(--line);
 
             box-shadow:
@@ -269,74 +229,54 @@
                 );
         }
 
-
-        /* 컬럼 타이틀 */
-
         .column-title {
             display: flex;
-
             justify-content: space-between;
             align-items: center;
-
             margin-bottom: 16px;
-
             padding: 4px 3px;
         }
 
         .column-name {
             display: flex;
-
             align-items: center;
-
             gap: 9px;
         }
 
         .column-title h2 {
             margin: 0;
-
             font-size: 18px;
             font-weight: 740;
-
             color: var(--blue-900);
         }
 
         .status-dot {
             width: 9px;
             height: 9px;
-
             border-radius: 50%;
         }
 
         .status-dot.open {
             background: var(--blue-700);
-
             box-shadow:
                 0 0 0 4px rgba(37, 99, 235, 0.10);
         }
 
         .status-dot.closed {
             background: #9aa7b8;
-
             box-shadow:
                 0 0 0 4px rgba(154, 167, 184, 0.10);
         }
 
         .count {
             padding: 6px 10px;
-
             border-radius: 20px;
-
             background: var(--white);
             border: 1px solid var(--line);
-
             font-size: 12px;
             font-weight: 650;
-
             color: #6f7d92;
         }
-
-
-        /* 공고 카드 */
 
         .notice-card {
             margin-bottom: 15px;
@@ -369,130 +309,78 @@
                 0 14px 28px rgba(37, 99, 235, 0.10);
         }
 
-
-        /* 상태 뱃지 */
-
         .status {
             display: inline-block;
-
             margin-bottom: 13px;
             padding: 6px 10px;
-
             border-radius: 20px;
-
             font-size: 12px;
             font-weight: 700;
         }
 
         .status.open {
             color: #245cc9;
-
-            background:
-                #e7f0ff;
-
-            border:
-                1px solid #c9dcff;
+            background: #e7f0ff;
+            border: 1px solid #c9dcff;
         }
 
         .status.closed {
             color: #738096;
-
-            background:
-                #f1f4f8;
-
-            border:
-                1px solid #dfe5ec;
+            background: #f1f4f8;
+            border: 1px solid #dfe5ec;
         }
-
-
-        /* 카드 텍스트 */
 
         .notice-card h3 {
             margin: 0 0 15px;
-
             font-size: 17px;
             font-weight: 710;
-
             line-height: 1.5;
-
             color: #23334c;
         }
 
         .meta {
             display: flex;
             align-items: center;
-
             gap: 7px;
-
             margin-bottom: 8px;
-
             font-size: 13px;
-
             color: #7a879a;
         }
 
         .meta-label {
             color: #53657d;
-
             font-weight: 650;
         }
 
-
-        /* 태그 */
-
         .tag {
             display: inline-block;
-
             margin-top: 10px;
             padding: 6px 9px;
-
             border-radius: 8px;
-
-            background:
-                var(--blue-100);
-
-            color:
-                #526c94;
-
-            border:
-                1px solid #d8e5f8;
-
+            background: var(--blue-100);
+            color: #526c94;
+            border: 1px solid #d8e5f8;
             font-size: 12px;
             font-weight: 600;
         }
 
-
-        /* 링크 */
-
         .detail-link {
             display: inline-flex;
             align-items: center;
-
             margin-top: 17px;
-
             color: var(--blue-700);
-
             font-size: 13px;
             font-weight: 700;
-
             text-decoration: none;
-
-            transition:
-                color 0.2s ease,
-                transform 0.2s ease;
         }
 
-        .detail-link:hover {
-            color: #1748b6;
-
-            transform: translateX(3px);
+        .empty-message {
+            padding: 18px;
+            color: #8a96a8;
+            font-size: 14px;
         }
-
-
-        /* 모바일 */
 
         @media (max-width: 800px) {
-
             .page {
                 padding: 30px 18px 50px;
             }
@@ -516,7 +404,6 @@
     </style>
 </head>
 
-
 <body>
 
     <div class="page">
@@ -526,348 +413,354 @@
             <p>지원사업의 모집 현황을 한눈에 확인하세요.</p>
         </header>
 
-
         <section class="summary">
 
             <div class="summary-card total">
                 <div class="label">전체 공고</div>
-                <div class="number">5</div>
+                <div class="number" id="totalCount">0</div>
             </div>
 
             <div class="summary-card open">
                 <div class="label">모집중</div>
-                <div class="number">3</div>
+                <div class="number" id="openCount">0</div>
             </div>
 
             <div class="summary-card closed">
                 <div class="label">모집완료</div>
-                <div class="number">2</div>
+                <div class="number" id="closedCount">0</div>
             </div>
 
         </section>
-
 
         <section class="toolbar">
 
             <input
                 type="text"
+                id="searchInput"
                 class="search-box"
                 placeholder="공고명을 검색하세요"
             >
 
-            <select class="select-box">
-                <option>전체 분야</option>
-                <option>온라인 판로</option>
-                <option>마케팅</option>
-                <option>교육</option>
-                <option>컨설팅</option>
+            <select id="categoryFilter" class="select-box">
+                <option value="all">전체 분야</option>
+                <option value="온라인 판로">온라인 판로</option>
+                <option value="마케팅">마케팅</option>
+                <option value="교육">교육</option>
+                <option value="컨설팅">컨설팅</option>
             </select>
 
         </section>
 
-
         <main class="board">
-
-
-            <!-- 모집중 -->
 
             <section class="column open-column">
 
                 <div class="column-title">
 
                     <div class="column-name">
-
                         <span class="status-dot open"></span>
-
                         <h2>모집중</h2>
-
                     </div>
 
-                    <span class="count">
-                        3건
+                    <span class="count" id="openColumnCount">
+                        0건
                     </span>
 
                 </div>
 
-
-                <article class="notice-card">
-
-                    <span class="status open">
-                        모집중
-                    </span>
-
-                    <h3>
-                        2026년 소상공인 온라인 판로지원사업
-                    </h3>
-
-                    <div class="meta">
-
-                        <span class="meta-label">
-                            모집기간
-                        </span>
-
-                        <span>
-                            2026.08.01 ~ 2026.08.31
-                        </span>
-
-                    </div>
-
-                    <div class="meta">
-
-                        <span class="meta-label">
-                            지원대상
-                        </span>
-
-                        <span>
-                            소상공인
-                        </span>
-
-                    </div>
-
-                    <span class="tag">
-                        온라인 판로
-                    </span>
-
-                    <br>
-
-                    <a
-                        href="#"
-                        class="detail-link"
-                    >
-                        판판대로에서 보기 →
-                    </a>
-
-                </article>
-
-
-                <article class="notice-card">
-
-                    <span class="status open">
-                        모집중
-                    </span>
-
-                    <h3>
-                        2026년 온라인 판매 활성화 지원사업
-                    </h3>
-
-                    <div class="meta">
-
-                        <span class="meta-label">
-                            모집기간
-                        </span>
-
-                        <span>
-                            2026.08.10 ~ 2026.09.05
-                        </span>
-
-                    </div>
-
-                    <div class="meta">
-
-                        <span class="meta-label">
-                            지원대상
-                        </span>
-
-                        <span>
-                            온라인 판매 사업자
-                        </span>
-
-                    </div>
-
-                    <span class="tag">
-                        마케팅
-                    </span>
-
-                    <br>
-
-                    <a
-                        href="#"
-                        class="detail-link"
-                    >
-                        판판대로에서 보기 →
-                    </a>
-
-                </article>
-
-
-                <article class="notice-card">
-
-                    <span class="status open">
-                        모집중
-                    </span>
-
-                    <h3>
-                        라이브커머스 입점 지원사업
-                    </h3>
-
-                    <div class="meta">
-
-                        <span class="meta-label">
-                            모집기간
-                        </span>
-
-                        <span>
-                            2026.08.12 ~ 2026.09.15
-                        </span>
-
-                    </div>
-
-                    <div class="meta">
-
-                        <span class="meta-label">
-                            지원대상
-                        </span>
-
-                        <span>
-                            소상공인
-                        </span>
-
-                    </div>
-
-                    <span class="tag">
-                        온라인 판로
-                    </span>
-
-                    <br>
-
-                    <a
-                        href="#"
-                        class="detail-link"
-                    >
-                        판판대로에서 보기 →
-                    </a>
-
-                </article>
+                <div id="openList"></div>
 
             </section>
-
-
-
-            <!-- 모집완료 -->
 
             <section class="column closed-column">
 
                 <div class="column-title">
 
                     <div class="column-name">
-
                         <span class="status-dot closed"></span>
-
                         <h2>모집완료</h2>
-
                     </div>
 
-                    <span class="count">
-                        2건
+                    <span class="count" id="closedColumnCount">
+                        0건
                     </span>
 
                 </div>
 
-
-                <article class="notice-card">
-
-                    <span class="status closed">
-                        모집완료
-                    </span>
-
-                    <h3>
-                        2026년 소상공인 마케팅 지원사업
-                    </h3>
-
-                    <div class="meta">
-
-                        <span class="meta-label">
-                            모집기간
-                        </span>
-
-                        <span>
-                            2026.07.01 ~ 2026.07.31
-                        </span>
-
-                    </div>
-
-                    <div class="meta">
-
-                        <span class="meta-label">
-                            지원대상
-                        </span>
-
-                        <span>
-                            소상공인
-                        </span>
-
-                    </div>
-
-                    <span class="tag">
-                        마케팅
-                    </span>
-
-                    <br>
-
-                    <a
-                        href="#"
-                        class="detail-link"
-                    >
-                        판판대로에서 보기 →
-                    </a>
-
-                </article>
-
-
-                <article class="notice-card">
-
-                    <span class="status closed">
-                        모집완료
-                    </span>
-
-                    <h3>
-                        온라인 입점 컨설팅 지원사업
-                    </h3>
-
-                    <div class="meta">
-
-                        <span class="meta-label">
-                            모집기간
-                        </span>
-
-                        <span>
-                            2026.06.20 ~ 2026.07.20
-                        </span>
-
-                    </div>
-
-                    <div class="meta">
-
-                        <span class="meta-label">
-                            지원대상
-                        </span>
-
-                        <span>
-                            소상공인
-                        </span>
-
-                    </div>
-
-                    <span class="tag">
-                        컨설팅
-                    </span>
-
-                    <br>
-
-                    <a
-                        href="#"
-                        class="detail-link"
-                    >
-                        판판대로에서 보기 →
-                    </a>
-
-                </article>
+                <div id="closedList"></div>
 
             </section>
 
         </main>
 
     </div>
+
+
+    <script>
+
+        /*
+            지금은 테스트용 데이터야.
+            나중에 이 부분을 실제 판판대로 데이터로 바꿀 거야.
+        */
+
+        const notices = [
+            {
+                title: "2026년 소상공인 온라인 판로지원사업",
+                status: "open",
+                period: "2026.08.01 ~ 2026.08.31",
+                target: "소상공인",
+                category: "온라인 판로",
+                url: "#"
+            },
+
+            {
+                title: "2026년 온라인 판매 활성화 지원사업",
+                status: "open",
+                period: "2026.08.10 ~ 2026.09.05",
+                target: "온라인 판매 사업자",
+                category: "마케팅",
+                url: "#"
+            },
+
+            {
+                title: "라이브커머스 입점 지원사업",
+                status: "open",
+                period: "2026.08.12 ~ 2026.09.15",
+                target: "소상공인",
+                category: "온라인 판로",
+                url: "#"
+            },
+
+            {
+                title: "2026년 소상공인 마케팅 지원사업",
+                status: "closed",
+                period: "2026.07.01 ~ 2026.07.31",
+                target: "소상공인",
+                category: "마케팅",
+                url: "#"
+            },
+
+            {
+                title: "온라인 입점 컨설팅 지원사업",
+                status: "closed",
+                period: "2026.06.20 ~ 2026.07.20",
+                target: "소상공인",
+                category: "컨설팅",
+                url: "#"
+            }
+        ];
+
+
+        function createNoticeCard(notice) {
+
+            const statusText =
+                notice.status === "open"
+                ? "모집중"
+                : "모집완료";
+
+            return `
+                <article class="notice-card">
+
+                    <span class="status ${notice.status}">
+                        ${statusText}
+                    </span>
+
+                    <h3>
+                        ${notice.title}
+                    </h3>
+
+                    <div class="meta">
+
+                        <span class="meta-label">
+                            모집기간
+                        </span>
+
+                        <span>
+                            ${notice.period}
+                        </span>
+
+                    </div>
+
+                    <div class="meta">
+
+                        <span class="meta-label">
+                            지원대상
+                        </span>
+
+                        <span>
+                            ${notice.target}
+                        </span>
+
+                    </div>
+
+                    <span class="tag">
+                        ${notice.category}
+                    </span>
+
+                    <br>
+
+                    <a
+                        href="${notice.url}"
+                        class="detail-link"
+                        target="_blank"
+                    >
+                        판판대로에서 보기 →
+                    </a>
+
+                </article>
+            `;
+        }
+
+
+        function renderNotices() {
+
+            const searchValue =
+                document
+                    .getElementById("searchInput")
+                    .value
+                    .toLowerCase();
+
+            const categoryValue =
+                document
+                    .getElementById("categoryFilter")
+                    .value;
+
+
+            const filteredNotices =
+                notices.filter(notice => {
+
+                    const matchesSearch =
+                        notice.title
+                            .toLowerCase()
+                            .includes(searchValue);
+
+                    const matchesCategory =
+                        categoryValue === "all"
+                        ||
+                        notice.category === categoryValue;
+
+                    return matchesSearch && matchesCategory;
+                });
+
+
+            const openNotices =
+                filteredNotices.filter(
+                    notice => notice.status === "open"
+                );
+
+
+            const closedNotices =
+                filteredNotices.filter(
+                    notice => notice.status === "closed"
+                );
+
+
+            const openList =
+                document.getElementById("openList");
+
+            const closedList =
+                document.getElementById("closedList");
+
+
+            if (openNotices.length > 0) {
+
+                openList.innerHTML =
+                    openNotices
+                        .map(createNoticeCard)
+                        .join("");
+
+            } else {
+
+                openList.innerHTML =
+                    `<div class="empty-message">
+                        해당하는 모집중 공고가 없습니다.
+                    </div>`;
+            }
+
+
+            if (closedNotices.length > 0) {
+
+                closedList.innerHTML =
+                    closedNotices
+                        .map(createNoticeCard)
+                        .join("");
+
+            } else {
+
+                closedList.innerHTML =
+                    `<div class="empty-message">
+                        해당하는 모집완료 공고가 없습니다.
+                    </div>`;
+            }
+
+
+            document
+                .getElementById("openColumnCount")
+                .textContent =
+                `${openNotices.length}건`;
+
+
+            document
+                .getElementById("closedColumnCount")
+                .textContent =
+                `${closedNotices.length}건`;
+        }
+
+
+        function updateSummary() {
+
+            const openCount =
+                notices.filter(
+                    notice => notice.status === "open"
+                ).length;
+
+
+            const closedCount =
+                notices.filter(
+                    notice => notice.status === "closed"
+                ).length;
+
+
+            document
+                .getElementById("totalCount")
+                .textContent =
+                notices.length;
+
+
+            document
+                .getElementById("openCount")
+                .textContent =
+                openCount;
+
+
+            document
+                .getElementById("closedCount")
+                .textContent =
+                closedCount;
+        }
+
+
+        document
+            .getElementById("searchInput")
+            .addEventListener(
+                "input",
+                renderNotices
+            );
+
+
+        document
+            .getElementById("categoryFilter")
+            .addEventListener(
+                "change",
+                renderNotices
+            );
+
+
+        updateSummary();
+
+        renderNotices();
+
+    </script>
 
 </body>
 </html>
