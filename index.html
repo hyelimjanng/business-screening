@@ -196,7 +196,7 @@
 
         .board {
             display: grid;
-            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            grid-template-columns: 1fr;
             gap: 24px;
             align-items: start;
         }
@@ -279,6 +279,7 @@
         }
 
         .notice-card {
+            position: relative;
             margin-bottom: 15px;
             padding: 20px;
 
@@ -401,6 +402,40 @@
                 flex-direction: column;
             }
         }
+
+            .favorite-btn {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+
+            background: none;
+            border: none;
+            padding: 0;
+
+            font-size: 18px;
+            line-height: 1;
+            cursor: pointer;
+
+            color: #9ca3af;
+        }
+
+        .favorite-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .favorite-btn.active {
+            color: #f5b800;
+        }
+
+        .update-info {
+            margin-top: 24px;
+            margin-bottom: 14px;
+
+            font-size: 15px;
+            font-weight: 400;
+            color: var(--text-sub);
+        }
+
     </style>
 </head>
 
@@ -415,22 +450,26 @@
 
         <section class="summary">
 
-            <div class="summary-card total">
+            <div class="summary-card total" data-view="all">
                 <div class="label">전체 공고</div>
                 <div class="number" id="totalCount">0</div>
             </div>
 
-            <div class="summary-card open">
+            <div class="summary-card open" data-view="open">
                 <div class="label">모집중</div>
                 <div class="number" id="openCount">0</div>
             </div>
 
-            <div class="summary-card closed">
-                <div class="label">모집완료</div>
-                <div class="number" id="closedCount">0</div>
+            <div class="summary-card closed" data-view="favorites">
+                <div class="label">즐겨찾기</div>
+                <div class="number" id="favoriteCount">0</div>
             </div>
 
         </section>
+
+        <div class="update-info">
+            최종 업데이트 · <span id="updatedAt">확인 중...</span>
+        </div>
 
         <section class="toolbar">
 
@@ -472,24 +511,7 @@
 
             </section>
 
-            <section class="column closed-column">
-
-                <div class="column-title">
-
-                    <div class="column-name">
-                        <span class="status-dot closed"></span>
-                        <h2>모집완료</h2>
-                    </div>
-
-                    <span class="count" id="closedColumnCount">
-                        0건
-                    </span>
-
-                </div>
-
-                <div id="closedList"></div>
-
-            </section>
+            
 
         </main>
 
@@ -498,57 +520,148 @@
 
     <script>
 
-        /*
-            지금은 테스트용 데이터야.
-            나중에 이 부분을 실제 판판대로 데이터로 바꿀 거야.
-        */
 
-        const notices = [
-            {
-                title: "2026년 소상공인 온라인 판로지원사업",
-                status: "open",
-                period: "2026.08.01 ~ 2026.08.31",
-                target: "소상공인",
-                category: "온라인 판로",
-                url: "#"
-            },
+        let notices = [];
+        let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+        let currentView = "all";
 
-            {
-                title: "2026년 온라인 판매 활성화 지원사업",
-                status: "open",
-                period: "2026.08.10 ~ 2026.09.05",
-                target: "온라인 판매 사업자",
-                category: "마케팅",
-                url: "#"
-            },
 
-            {
-                title: "라이브커머스 입점 지원사업",
-                status: "open",
-                period: "2026.08.12 ~ 2026.09.15",
-                target: "소상공인",
-                category: "온라인 판로",
-                url: "#"
-            },
+function getStatus(item) {
 
-            {
-                title: "2026년 소상공인 마케팅 지원사업",
-                status: "closed",
-                period: "2026.07.01 ~ 2026.07.31",
-                target: "소상공인",
-                category: "마케팅",
-                url: "#"
-            },
+    if (
+        item.apply_possible === "Y"
+        &&
+        item.deadline_yn !== "Y"
+    ) {
+        return "open";
+    }
 
+    return "closed";
+}
+
+function openOriginal(sourceId) {
+
+    const form = document.createElement("form");
+
+    form.method = "POST";
+    form.action =
+        "https://fanfandaero.kr/portal/v2/preSprtBizPbancDetail.do";
+
+    form.target = "_blank";
+
+
+    const sprtBizCd =
+        document.createElement("input");
+
+    sprtBizCd.type = "hidden";
+    sprtBizCd.name = "sprtBizCd";
+    sprtBizCd.value = sourceId;
+
+
+    const sprtBizTrgtYn =
+        document.createElement("input");
+
+    sprtBizTrgtYn.type = "hidden";
+    sprtBizTrgtYn.name = "sprtBizTrgtYn";
+    sprtBizTrgtYn.value = "Y";
+
+
+    const groupNo =
+        document.createElement("input");
+
+    groupNo.type = "hidden";
+    groupNo.name = "groupNo";
+    groupNo.value = "";
+
+
+    form.appendChild(sprtBizCd);
+    form.appendChild(sprtBizTrgtYn);
+    form.appendChild(groupNo);
+
+    document.body.appendChild(form);
+
+    form.submit();
+
+    form.remove();
+}
+
+async function loadNotices() {
+
+    try {
+
+        const response = await fetch(
+            "data.json",
             {
-                title: "온라인 입점 컨설팅 지원사업",
-                status: "closed",
-                period: "2026.06.20 ~ 2026.07.20",
-                target: "소상공인",
-                category: "컨설팅",
-                url: "#"
+                cache: "no-store"
             }
-        ];
+        );
+
+        if (!response.ok) {
+            throw new Error(
+                `data.json 불러오기 실패: ${response.status}`
+            );
+        }
+
+
+        const data = await response.json();
+
+
+        const items = Array.isArray(data) ? data : data.items;
+        const updatedAt = Array.isArray(data) ? "" : (data.updated_at || "");
+
+        document.getElementById("updatedAt").textContent =
+         updatedAt || "업데이트 정보 없음";
+
+        notices = items.map(item => {
+
+            return {
+                title: item.title,
+                status: getStatus(item),
+
+                period:
+                    `${item.apply_start} ~ ${item.apply_end}`,
+
+                target:
+                    item.target || "정보 없음",
+
+                category:
+                    item.category || "기타",
+
+                region:
+                    item.region || "전국",
+
+                source:
+                    item.source || "판판대로",
+
+                sourceId:
+                    item.source_id
+
+            };
+
+        });
+
+updateSummary();
+renderNotices();
+
+        console.log(
+            `공고 ${notices.length}건을 불러왔습니다.`
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        document
+            .getElementById("openList")
+            .innerHTML =
+            `<div class="empty-message">
+                데이터를 불러오지 못했습니다.
+            </div>`;
+
+    }
+}
 
 
         function createNoticeCard(notice) {
@@ -567,6 +680,13 @@
 
                     <h3>
                         ${notice.title}
+                        <button
+                            class="favorite-btn ${favorites.includes(notice.sourceId) ? "active" : ""}"
+                            onclick="toggleFavorite('${notice.sourceId}')"
+                            title="즐겨찾기"
+                        >
+                            ${favorites.includes(notice.sourceId) ? "★" : "☆"}
+                        </button>
                     </h3>
 
                     <div class="meta">
@@ -600,15 +720,31 @@
                     <br>
 
                     <a
-                        href="${notice.url}"
+                        href="#"
                         class="detail-link"
-                        target="_blank"
+                        onclick="openOriginal('${notice.sourceId}'); return false;"
                     >
-                        판판대로에서 보기 →
+                        원문보기 →
                     </a>
 
                 </article>
             `;
+        }
+
+        function toggleFavorite(sourceId) {
+            if (favorites.includes(sourceId)) {
+                favorites = favorites.filter(id => id !== sourceId);
+            } else {
+                favorites.push(sourceId);
+            }
+
+            localStorage.setItem(
+                "favorites",
+                JSON.stringify(favorites)
+            );
+
+            updateSummary();
+            renderNotices();
         }
 
 
@@ -636,10 +772,14 @@
 
                     const matchesCategory =
                         categoryValue === "all"
-                        ||
-                        notice.category === categoryValue;
+                        || notice.category === categoryValue;
 
-                    return matchesSearch && matchesCategory;
+                    const matchesView =
+                        currentView === "all"
+                        || (currentView === "open" && notice.status === "open")
+                        || (currentView === "favorites" && favorites.includes(notice.sourceId));
+
+                    return matchesSearch && matchesCategory && matchesView;
                 });
 
 
@@ -648,18 +788,8 @@
                     notice => notice.status === "open"
                 );
 
-
-            const closedNotices =
-                filteredNotices.filter(
-                    notice => notice.status === "closed"
-                );
-
-
             const openList =
                 document.getElementById("openList");
-
-            const closedList =
-                document.getElementById("closedList");
 
 
             if (openNotices.length > 0) {
@@ -678,32 +808,11 @@
             }
 
 
-            if (closedNotices.length > 0) {
-
-                closedList.innerHTML =
-                    closedNotices
-                        .map(createNoticeCard)
-                        .join("");
-
-            } else {
-
-                closedList.innerHTML =
-                    `<div class="empty-message">
-                        해당하는 모집완료 공고가 없습니다.
-                    </div>`;
-            }
-
-
             document
                 .getElementById("openColumnCount")
                 .textContent =
                 `${openNotices.length}건`;
 
-
-            document
-                .getElementById("closedColumnCount")
-                .textContent =
-                `${closedNotices.length}건`;
         }
 
 
@@ -714,12 +823,10 @@
                     notice => notice.status === "open"
                 ).length;
 
-
-            const closedCount =
+            const favoriteCount =
                 notices.filter(
-                    notice => notice.status === "closed"
+                    notice => favorites.includes(notice.sourceId)
                 ).length;
-
 
             document
                 .getElementById("totalCount")
@@ -732,11 +839,11 @@
                 .textContent =
                 openCount;
 
-
             document
-                .getElementById("closedCount")
+                .getElementById("favoriteCount")
                 .textContent =
-                closedCount;
+                favoriteCount;
+
         }
 
 
@@ -754,11 +861,19 @@
                 "change",
                 renderNotices
             );
+        
+        document
+            .querySelectorAll(".summary-card")
+            .forEach(card => {
+                card.addEventListener("click", () => {
+                    currentView = card.dataset.view;
+                    renderNotices();
+                });
+            });
 
 
-        updateSummary();
+        loadNotices();
 
-        renderNotices();
 
     </script>
 
