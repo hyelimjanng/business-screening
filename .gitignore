@@ -1,0 +1,15 @@
+# 비밀정보 / 환경변수
+.env
+.env.*
+
+# Python 캐시
+__pycache__/
+*.pyc
+
+# 가상환경
+venv/
+.venv/
+
+# 운영체제 / 에디터 임시파일
+.DS_Store
+Thumbs.db
