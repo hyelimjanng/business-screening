@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-13 16:32",
+  "updated_at": "2026-08-14 06:26",
   "items": [
     {
       "source": "판판대로",
@@ -82,6 +82,42 @@
       "category": "유통∙판로",
       "region": "전국",
       "source_id": "202603040800",
+      "apply_possible": "Y",
+      "deadline_yn": "N"
+    },
+    {
+      "source": "판판대로",
+      "title": "「2026 상품 개선 지원사업」",
+      "apply_start": "2026-08-14",
+      "apply_end": "2026-08-28",
+      "target": "소상공인",
+      "category": "홍보∙마케팅",
+      "region": "전국",
+      "source_id": "202603040900",
+      "apply_possible": "Y",
+      "deadline_yn": "N"
+    },
+    {
+      "source": "판판대로",
+      "title": "「2026 콘텐츠 제작 지원사업」",
+      "apply_start": "2026-08-14",
+      "apply_end": "2026-08-28",
+      "target": "소상공인",
+      "category": "홍보∙마케팅",
+      "region": "전국",
+      "source_id": "202603041000",
+      "apply_possible": "Y",
+      "deadline_yn": "N"
+    },
+    {
+      "source": "판판대로",
+      "title": "「2026 상세페이지 제작 지원사업」",
+      "apply_start": "2026-08-14",
+      "apply_end": "2026-08-28",
+      "target": "소상공인",
+      "category": "홍보∙마케팅",
+      "region": "전국",
+      "source_id": "202603041100",
       "apply_possible": "Y",
       "deadline_yn": "N"
     },
