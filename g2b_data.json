@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-18 11:19:23",
+  "updated_at": "2026-08-18 16:07:37",
   "total_count": 31,
   "items": [
     {
@@ -7,14 +7,14 @@
       "source_id": "R26BK01681648",
       "source_order": "000",
       "title": "2026년 통영시 청춘마켓 로컬브랜드 디지털 판로 확대 지원 사업 운영 용역",
+      "organization": "경상남도 통영시",
       "notice_date": "2026-08-13 15:44:14",
       "apply_start": "2026-08-18 10:00:00",
       "apply_end": "2026-08-20 11:00:00",
-      "organization": "경상남도 통영시",
-      "demand_org": "경상남도 통영시",
-      "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01681648&bidPbancOrd=000",
-      "notice_kind": "등록공고"
+      "notice_kind": "등록공고",
+      "first_seen_at": "2026-08-13 15:44:14",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -28,7 +28,9 @@
       "demand_org": "사단법인 초기투자액셀러레이터협회",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01674559&bidPbancOrd=001",
-      "notice_kind": "변경공고"
+      "notice_kind": "변경공고",
+      "first_seen_at": "2026-08-11 13:25:35",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -42,7 +44,9 @@
       "demand_org": "한국관광공사",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01674291&bidPbancOrd=000",
-      "notice_kind": "등록공고"
+      "notice_kind": "등록공고",
+      "first_seen_at": "2026-08-10 14:44:46",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -56,7 +60,9 @@
       "demand_org": "국립경국대학교",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01655158&bidPbancOrd=000",
-      "notice_kind": "재공고"
+      "notice_kind": "재공고",
+      "first_seen_at": "2026-07-28 17:31:14",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -70,7 +76,9 @@
       "demand_org": "경상국립대학교 산학협력단",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01652823&bidPbancOrd=000",
-      "notice_kind": "등록공고"
+      "notice_kind": "등록공고",
+      "first_seen_at": "2026-07-27 17:43:34",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -84,7 +92,9 @@
       "demand_org": "재단법인 세종창조경제혁신센터",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01650848&bidPbancOrd=000",
-      "notice_kind": "등록공고"
+      "notice_kind": "등록공고",
+      "first_seen_at": "2026-07-27 11:27:06",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -98,7 +108,9 @@
       "demand_org": "경상국립대학교 산학협력단",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01635596&bidPbancOrd=000",
-      "notice_kind": "등록공고"
+      "notice_kind": "등록공고",
+      "first_seen_at": "2026-07-16 13:20:05",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -112,7 +124,9 @@
       "demand_org": "(재)울산테크노파크",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01631225&bidPbancOrd=000",
-      "notice_kind": "등록공고"
+      "notice_kind": "등록공고",
+      "first_seen_at": "2026-07-14 09:39:58",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -126,7 +140,9 @@
       "demand_org": "국립경국대학교",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01631205&bidPbancOrd=000",
-      "notice_kind": "등록공고"
+      "notice_kind": "등록공고",
+      "first_seen_at": "2026-07-14 09:11:14",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -140,7 +156,9 @@
       "demand_org": "농촌진흥청",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01623120&bidPbancOrd=000",
-      "notice_kind": "등록공고"
+      "notice_kind": "등록공고",
+      "first_seen_at": "2026-07-08 14:28:03",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -154,7 +172,9 @@
       "demand_org": "재단법인 안산시 상권활성화재단",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01620849&bidPbancOrd=000",
-      "notice_kind": "재공고"
+      "notice_kind": "재공고",
+      "first_seen_at": "2026-07-07 14:51:19",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -168,7 +188,9 @@
       "demand_org": "재단법인 경상북도경제진흥원",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01616636&bidPbancOrd=000",
-      "notice_kind": "등록공고"
+      "notice_kind": "등록공고",
+      "first_seen_at": "2026-07-06 09:09:36",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -182,7 +204,9 @@
       "demand_org": "서울특별시 중랑구",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01610081&bidPbancOrd=000",
-      "notice_kind": "재공고"
+      "notice_kind": "재공고",
+      "first_seen_at": "2026-06-30 19:37:48",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -196,7 +220,9 @@
       "demand_org": "한국식품연구원",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01601461&bidPbancOrd=000",
-      "notice_kind": "등록공고"
+      "notice_kind": "등록공고",
+      "first_seen_at": "2026-06-25 13:18:40",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -210,7 +236,9 @@
       "demand_org": "재단법인 전북테크노파크",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01595918&bidPbancOrd=000",
-      "notice_kind": "등록공고"
+      "notice_kind": "등록공고",
+      "first_seen_at": "2026-06-22 17:04:36",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -224,7 +252,9 @@
       "demand_org": "재단법인 안산시 상권활성화재단",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01577659&bidPbancOrd=000",
-      "notice_kind": "등록공고"
+      "notice_kind": "등록공고",
+      "first_seen_at": "2026-06-19 09:09:43",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -238,7 +268,9 @@
       "demand_org": "한국세라믹기술원",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01584726&bidPbancOrd=000",
-      "notice_kind": "재공고"
+      "notice_kind": "재공고",
+      "first_seen_at": "2026-06-16 16:20:34",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -252,7 +284,9 @@
       "demand_org": "서울특별시 중랑구",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01582329&bidPbancOrd=000",
-      "notice_kind": "등록공고"
+      "notice_kind": "등록공고",
+      "first_seen_at": "2026-06-15 21:30:03",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -266,7 +300,9 @@
       "demand_org": "재단법인전북특별자치도콘텐츠융합진흥원",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01579387&bidPbancOrd=000",
-      "notice_kind": "등록공고"
+      "notice_kind": "등록공고",
+      "first_seen_at": "2026-06-15 09:36:05",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -280,7 +316,9 @@
       "demand_org": "주식회사한국중소벤처기업유통원",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01569952&bidPbancOrd=000",
-      "notice_kind": "등록공고"
+      "notice_kind": "등록공고",
+      "first_seen_at": "2026-06-12 14:34:51",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -294,7 +332,9 @@
       "demand_org": "주식회사 무신사",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01577164&bidPbancOrd=000",
-      "notice_kind": "등록공고"
+      "notice_kind": "등록공고",
+      "first_seen_at": "2026-06-12 13:28:52",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -308,7 +348,9 @@
       "demand_org": "주식회사 무신사",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01577198&bidPbancOrd=000",
-      "notice_kind": "등록공고"
+      "notice_kind": "등록공고",
+      "first_seen_at": "2026-06-12 13:23:24",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -322,7 +364,9 @@
       "demand_org": "사단법인 충북바이오산학융합원",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01568399&bidPbancOrd=000",
-      "notice_kind": "재공고"
+      "notice_kind": "재공고",
+      "first_seen_at": "2026-06-09 10:23:39",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -336,7 +380,9 @@
       "demand_org": "재단법인 경상북도경제진흥원",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01562720&bidPbancOrd=000",
-      "notice_kind": "등록공고"
+      "notice_kind": "등록공고",
+      "first_seen_at": "2026-06-09 09:03:07",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -350,7 +396,9 @@
       "demand_org": "재단법인 경상북도경제진흥원",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01562027&bidPbancOrd=000",
-      "notice_kind": "등록공고"
+      "notice_kind": "등록공고",
+      "first_seen_at": "2026-06-09 09:02:17",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -364,7 +412,9 @@
       "demand_org": "(재)한국조선해양기자재연구원",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01565834&bidPbancOrd=000",
-      "notice_kind": "재공고"
+      "notice_kind": "재공고",
+      "first_seen_at": "2026-06-08 13:19:40",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -378,7 +428,9 @@
       "demand_org": "재단법인 경상북도경제진흥원",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01561919&bidPbancOrd=000",
-      "notice_kind": "등록공고"
+      "notice_kind": "등록공고",
+      "first_seen_at": "2026-06-08 09:43:59",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -392,7 +444,9 @@
       "demand_org": "재단법인 경상북도경제진흥원",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01561896&bidPbancOrd=000",
-      "notice_kind": "등록공고"
+      "notice_kind": "등록공고",
+      "first_seen_at": "2026-06-08 09:43:32",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -406,7 +460,9 @@
       "demand_org": "한국세라믹기술원",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01560415&bidPbancOrd=000",
-      "notice_kind": "등록공고"
+      "notice_kind": "등록공고",
+      "first_seen_at": "2026-06-04 14:54:53",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -420,7 +476,9 @@
       "demand_org": "인천테크노파크",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01559855&bidPbancOrd=000",
-      "notice_kind": "등록공고"
+      "notice_kind": "등록공고",
+      "first_seen_at": "2026-06-04 13:40:55",
+      "last_seen_at": "2026-08-18 16:07:37"
     },
     {
       "source": "나라장터",
@@ -434,7 +492,9 @@
       "demand_org": "재단법인 전주정보문화산업진흥원",
       "category": "판로지원",
       "url": "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=R26BK01541552&bidPbancOrd=001",
-      "notice_kind": "변경공고"
+      "notice_kind": "변경공고",
+      "first_seen_at": "2026-06-01 16:27:23",
+      "last_seen_at": "2026-08-18 16:07:37"
     }
   ]
 }

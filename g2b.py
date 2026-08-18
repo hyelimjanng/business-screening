@@ -18,46 +18,32 @@ API_KEY = os.getenv("G2B_API_KEY")
 ENDPOINT = os.getenv("G2B_ENDPOINT")
 
 if not API_KEY:
-    raise ValueError(
-        "G2B_API_KEY가 .env에 없습니다."
-    )
+    raise ValueError("G2B_API_KEY가 .env에 없습니다.")
 
 if not ENDPOINT:
-    raise ValueError(
-        "G2B_ENDPOINT가 .env에 없습니다."
-    )
+    raise ValueError("G2B_ENDPOINT가 .env에 없습니다.")
 
 
-# 한 페이지당 조회 개수
 ROWS_PER_PAGE = 100
+DATA_FILE = "g2b_data.json"
 
-# 현재 시각
-today = datetime.now()
-
-
-# ============================================================
-# 초기 적재 기간
-# 2026년 6월 1일 ~ 오늘
-# ============================================================
-
-backfill_start = datetime(
-    today.year,
-    6,
-    1
-)
-
-backfill_end = today
+now = datetime.now()
 
 
 # ============================================================
-# API 한 페이지 조회
+# 조회 기간
+# 초기 적재 완료 후에는 최근 7일만 확인
 # ============================================================
 
-def fetch_page(
-    page_no,
-    start_text,
-    end_text
-):
+start_date = now - timedelta(days=6)
+end_date = now
+
+
+# ============================================================
+# API 호출
+# ============================================================
+
+def fetch_page(page_no, start_text, end_text):
 
     params = {
         "pageNo": str(page_no),
@@ -68,11 +54,7 @@ def fetch_page(
         "inqryEndDt": end_text
     }
 
-    # serviceKey는 URL에 직접 붙임
-    request_url = (
-        f"{ENDPOINT}"
-        f"?serviceKey={API_KEY}"
-    )
+    request_url = f"{ENDPOINT}?serviceKey={API_KEY}"
 
     response = requests.get(
         request_url,
@@ -90,129 +72,68 @@ def fetch_page(
         .get("header", {})
     )
 
-    result_code = header.get(
-        "resultCode"
-    )
-
-    if result_code != "00":
+    if header.get("resultCode") != "00":
         raise RuntimeError(
             f"나라장터 API 오류: {header}"
         )
 
-    body = (
+    return (
         data
         .get("response", {})
         .get("body", {})
     )
 
-    return body
-
 
 # ============================================================
-# 특정 기간의 모든 페이지 조회
+# 최근 7일 전체 페이지 수집
 # ============================================================
 
-def collect_period(
-    start_date,
-    end_date
-):
+start_text = (
+    start_date.strftime("%Y%m%d")
+    + "0000"
+)
 
-    start_text = (
-        start_date.strftime("%Y%m%d")
-        + "0000"
-    )
-
-    end_text = (
-        end_date.strftime("%Y%m%d")
-        + "2359"
-    )
-
-    print()
-    print("=" * 70)
-
-    print(
-        f"조회 기간: "
-        f"{start_date:%Y-%m-%d}"
-        f" ~ "
-        f"{end_date:%Y-%m-%d}"
-    )
-
-    period_items = []
-
-    page_no = 1
-
-    while True:
-
-        body = fetch_page(
-            page_no,
-            start_text,
-            end_text
-        )
-
-        items = (
-            body.get("items", [])
-            or []
-        )
-
-        total_count = int(
-            body.get("totalCount", 0)
-            or 0
-        )
-
-        print(
-            f"{page_no}페이지: "
-            f"{len(items)}건 "
-            f"/ 전체 {total_count}건"
-        )
-
-        period_items.extend(
-            items
-        )
-
-        # 전체 건수를 다 가져왔으면 종료
-        if len(period_items) >= total_count:
-            break
-
-        # 결과가 더 이상 없으면 종료
-        if not items:
-            break
-
-        page_no += 1
-
-    return period_items
-
-
-# ============================================================
-# 6월 1일부터 오늘까지
-# 7일 단위로 전체 수집
-# ============================================================
+end_text = (
+    end_date.strftime("%Y%m%d")
+    + "2359"
+)
 
 all_items = []
+page_no = 1
 
-current_start = backfill_start
+while True:
 
-
-while current_start <= backfill_end:
-
-    current_end = min(
-        current_start
-        + timedelta(days=6),
-        backfill_end
+    body = fetch_page(
+        page_no,
+        start_text,
+        end_text
     )
 
-    period_items = collect_period(
-        current_start,
-        current_end
+    items = (
+        body.get("items", [])
+        or []
     )
 
-    all_items.extend(
-        period_items
+    total_count = int(
+        body.get("totalCount", 0)
+        or 0
     )
 
-    current_start = (
-        current_end
-        + timedelta(days=1)
+    print(
+        f"{page_no}페이지: "
+        f"{len(items)}건 "
+        f"/ 전체 {total_count}건"
     )
+
+    all_items.extend(items)
+
+    if len(all_items) >= total_count:
+        break
+
+    if not items:
+        break
+
+    page_no += 1
 
 
 # ============================================================
@@ -221,165 +142,168 @@ while current_start <= backfill_end:
 
 filtered_items = []
 
-
 for item in all_items:
 
     title = (
-        item.get(
-            "bidNtceNm",
-            ""
-        )
+        item.get("bidNtceNm", "")
         or ""
     )
 
-    # 제목에 판로와 지원이
-    # 둘 다 들어간 공고만
-    matches_keyword = (
+    if not (
         "판로" in title
         and "지원" in title
-    )
-
-    if not matches_keyword:
+    ):
         continue
 
-
-    # 취소공고 제외
     notice_kind = (
-        item.get(
-            "ntceKindNm",
-            ""
-        )
+        item.get("ntceKindNm", "")
         or ""
     )
 
     if "취소" in notice_kind:
         continue
 
-
-    # 올해 공고만
-    notice_date = (
-        item.get(
-            "bidNtceDt",
-            ""
-        )
-        or ""
-    )
-
-    if not notice_date.startswith(
-        str(today.year)
-    ):
-        continue
-
-
-    # 마감된 공고도 여기서는 삭제하지 않음
-    # DB/JSON에는 보관하고
-    # 화면에서 필요할 때 숨길 예정
-
-    filtered_items.append(
-        item
-    )
+    filtered_items.append(item)
 
 
 # ============================================================
-# 같은 공고번호는 최신 차수만 남김
+# 같은 공고번호는 최신 차수만 유지
 # ============================================================
 
 latest_items = {}
 
-
 for item in filtered_items:
 
     bid_no = (
-        item.get(
-            "bidNtceNo",
-            ""
-        )
+        item.get("bidNtceNo", "")
         or ""
     )
 
     bid_ord = (
-        item.get(
-            "bidNtceOrd",
-            ""
-        )
+        item.get("bidNtceOrd", "")
         or ""
     )
 
     if not bid_no:
         continue
 
-
-    existing = latest_items.get(
-        bid_no
-    )
-
+    existing = latest_items.get(bid_no)
 
     if existing is None:
-
-        latest_items[
-            bid_no
-        ] = item
-
+        latest_items[bid_no] = item
         continue
 
-
     existing_ord = (
-        existing.get(
-            "bidNtceOrd",
-            ""
-        )
+        existing.get("bidNtceOrd", "")
         or ""
     )
 
-
-    # 차수가 더 높은 공고로 교체
     if bid_ord > existing_ord:
-
-        latest_items[
-            bid_no
-        ] = item
+        latest_items[bid_no] = item
 
 
 filtered_items = list(
     latest_items.values()
 )
 
-
 # ============================================================
-# 최신 공고순 정렬
+# 기존 적재 데이터 읽기
 # ============================================================
 
-filtered_items.sort(
-    key=lambda item: (
-        item.get(
-            "bidNtceDt",
-            ""
-        )
+if os.path.exists(DATA_FILE):
+
+    with open(
+        DATA_FILE,
+        "r",
+        encoding="utf-8"
+    ) as file:
+
+        existing_data = json.load(file)
+
+    existing_items = (
+        existing_data.get("items", [])
+        or []
+    )
+
+    # 기존 데이터에 first_seen_at / last_seen_at이 없으면 초기값 생성
+    migration_time = now.strftime("%Y-%m-%d %H:%M:%S")
+
+    for item in existing_items:
+
+        if not item.get("first_seen_at"):
+            item["first_seen_at"] = (
+                item.get("notice_date")
+                or migration_time
+            )
+
+        if not item.get("last_seen_at"):
+            item["last_seen_at"] = migration_time
+
+else:
+    existing_items = []
+
+
+# source_id 기준 기존 데이터 색인
+stored_items = {}
+
+for item in existing_items:
+
+    source_id = (
+        item.get("source_id", "")
         or ""
-    ),
-    reverse=True
+    )
+
+    if source_id:
+        stored_items[source_id] = item
+
+        
+# ============================================================
+# 신규 / 기존 공고 누적 갱신
+# ============================================================
+
+current_time = now.strftime(
+    "%Y-%m-%d %H:%M:%S"
 )
 
-
-# ============================================================
-# 저장용 데이터로 정리
-# ============================================================
-
-normalized_items = []
+new_count = 0
+updated_count = 0
 
 
 for item in filtered_items:
 
+    source_id = (
+        item.get("bidNtceNo", "")
+        or ""
+    )
+
+    if not source_id:
+        continue
+
+    old_item = stored_items.get(
+        source_id
+    )
+
+    if old_item:
+        first_seen_at = (
+            old_item.get(
+                "first_seen_at"
+            )
+            or current_time
+        )
+
+        updated_count += 1
+
+    else:
+        first_seen_at = current_time
+        new_count += 1
+
+
     normalized_item = {
 
-        "source":
-            "나라장터",
+        "source": "나라장터",
 
         "source_id":
-            item.get(
-                "bidNtceNo"
-            )
-            or "",
+            source_id,
 
         "source_order":
             item.get(
@@ -390,6 +314,12 @@ for item in filtered_items:
         "title":
             item.get(
                 "bidNtceNm"
+            )
+            or "",
+
+        "organization":
+            item.get(
+                "ntceInsttNm"
             )
             or "",
 
@@ -411,21 +341,6 @@ for item in filtered_items:
             )
             or "",
 
-        "organization":
-            item.get(
-                "ntceInsttNm"
-            )
-            or "",
-
-        "demand_org":
-            item.get(
-                "dminsttNm"
-            )
-            or "",
-
-        "category":
-            "판로지원",
-
         "url":
             item.get(
                 "bidNtceDtlUrl"
@@ -436,35 +351,53 @@ for item in filtered_items:
             item.get(
                 "ntceKindNm"
             )
-            or ""
+            or "",
+
+        "first_seen_at":
+            first_seen_at,
+
+        "last_seen_at":
+            current_time
     }
 
-    normalized_items.append(
-        normalized_item
-    )
+    stored_items[
+        source_id
+    ] = normalized_item
 
 
 # ============================================================
-# JSON 파일 저장
+# 전체 저장
 # ============================================================
+
+final_items = list(
+    stored_items.values()
+)
+
+final_items.sort(
+    key=lambda item:
+        item.get(
+            "notice_date",
+            ""
+        ),
+    reverse=True
+)
+
 
 output_data = {
 
     "updated_at":
-        datetime.now().strftime(
-            "%Y-%m-%d %H:%M:%S"
-        ),
+        current_time,
 
     "total_count":
-        len(normalized_items),
+        len(final_items),
 
     "items":
-        normalized_items
+        final_items
 }
 
 
 with open(
-    "g2b_data.json",
+    DATA_FILE,
     "w",
     encoding="utf-8"
 ) as file:
@@ -478,42 +411,38 @@ with open(
 
 
 # ============================================================
-# 최종 결과
+# 결과
 # ============================================================
 
 print()
 print("=" * 70)
 
 print(
-    "API에서 전체 조회한 공고:",
+    "최근 7일 전체 조회:",
     len(all_items)
 )
 
 print(
-    "판로+지원 조건 공고:",
+    "이번 수집 판로+지원 공고:",
     len(filtered_items)
 )
 
 print(
-    "g2b_data.json 저장 공고:",
-    len(normalized_items)
+    "신규 공고:",
+    new_count
+)
+
+print(
+    "기존 공고 갱신:",
+    updated_count
+)
+
+print(
+    "현재 누적 적재:",
+    len(final_items)
 )
 
 print("=" * 70)
 
 print()
-print(
-    "g2b_data.json 저장 완료!"
-)
-
-
-# 저장된 공고 확인
-for item in normalized_items:
-
-    print()
-
-    print(
-        item["source_id"],
-        "/",
-        item["title"]
-    )
+print("g2b_data.json 누적 갱신 완료!")
