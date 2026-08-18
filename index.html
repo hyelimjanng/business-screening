@@ -72,7 +72,7 @@
 
         .summary {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 18px;
             margin-bottom: 26px;
         }
@@ -421,11 +421,6 @@
 
         <section class="summary">
 
-            <div class="summary-card total" data-view="all">
-                <div class="label">전체 공고</div>
-                <div class="number" id="totalCount">0</div>
-            </div>
-
             <div class="summary-card open" data-view="open">
                 <div class="label">모집중</div>
                 <div class="number" id="openCount">0</div>
@@ -499,6 +494,26 @@
 
 function getStatus(item) {
 
+    // 나라장터 데이터
+    if (item.source === "나라장터") {
+
+        if (!item.apply_end) {
+            return "open";
+        }
+
+        const deadline = new Date(
+            item.apply_end.replace(" ", "T")
+        );
+
+        const now = new Date();
+
+        return deadline >= now
+            ? "open"
+            : "closed";
+    }
+
+
+    // 판판대로 데이터
     if (
         item.apply_possible === "Y"
         &&
@@ -560,59 +575,145 @@ async function loadNotices() {
 
     try {
 
-        const response = await fetch(
-            "data.json",
-            {
-                cache: "no-store"
-            }
-        );
+        const [
+            fanfandaeroResponse,
+            g2bResponse
+        ] = await Promise.all([
+            fetch(
+                "data.json",
+                {
+                    cache: "no-store"
+                }
+            ),
+            fetch(
+                "g2b_data.json",
+                {
+                    cache: "no-store"
+                }
+            )
+        ]);
 
-        if (!response.ok) {
+
+        if (!fanfandaeroResponse.ok) {
             throw new Error(
-                `data.json 불러오기 실패: ${response.status}`
+                `data.json 불러오기 실패: ${fanfandaeroResponse.status}`
             );
         }
 
 
-        const data = await response.json();
+        if (!g2bResponse.ok) {
+            throw new Error(
+                `g2b_data.json 불러오기 실패: ${g2bResponse.status}`
+            );
+        }
 
 
-        const items = Array.isArray(data) ? data : data.items;
-        const updatedAt = Array.isArray(data) ? "" : (data.updated_at || "");
+        const fanfandaeroData =
+            await fanfandaeroResponse.json();
 
-        document.getElementById("updatedAt").textContent =
-         updatedAt || "업데이트 정보 없음";
+        const g2bData =
+            await g2bResponse.json();
 
-        notices = items.map(item => {
+
+        const fanfandaeroItems =
+            Array.isArray(fanfandaeroData)
+                ? fanfandaeroData
+                : (fanfandaeroData.items || []);
+
+
+        const g2bItems =
+            Array.isArray(g2bData)
+                ? g2bData
+                : (g2bData.items || []);
+
+
+        const updatedAt =
+            g2bData.updated_at
+            || fanfandaeroData.updated_at
+            || "";
+
+
+        document
+            .getElementById("updatedAt")
+            .textContent =
+            updatedAt || "업데이트 정보 없음";
+
+
+        const allItems = [
+            ...fanfandaeroItems,
+            ...g2bItems
+        ];
+
+
+        notices = allItems.map(item => {
+
+            const isG2B =
+                item.source === "나라장터";
+
 
             return {
-                title: item.title,
-                status: getStatus(item),
+
+                title:
+                    item.title || "제목 없음",
+
+                status:
+                    getStatus(item),
 
                 period:
-                    `${item.apply_start} ~ ${item.apply_end}`,
+                    `${item.apply_start || ""} ~ ${item.apply_end || ""}`,
 
                 target:
-                    item.target || "정보 없음",
+                    isG2B
+                        ? (
+                            item.demand_org
+                            || item.organization
+                            || "정보 없음"
+                        )
+                        : (
+                            item.target
+                            || "정보 없음"
+                        ),
 
                 category:
-                    item.category || "기타",
+                    item.category
+                    || "기타",
 
                 region:
-                    item.region || "전국",
+                    item.region
+                    || "전국",
 
                 source:
-                    item.source || "판판대로",
+                    item.source
+                    || "판판대로",
 
                 sourceId:
                     item.source_id
+                    || "",
+
+                url:
+                    item.url
+                    || "",
+
+                noticeDate:
+                    item.notice_date
+                    || "",
+
+                organization:
+                    item.organization
+                    || "",
+
+                sourceOrder:
+                    item.source_order
+                    || ""
 
             };
 
         });
 
-updateSummary();
-renderNotices();
+
+        updateSummary();
+        renderNotices();
+
 
         console.log(
             `공고 ${notices.length}건을 불러왔습니다.`
@@ -632,6 +733,7 @@ renderNotices();
             </div>`;
 
     }
+
 }
 
 
@@ -798,12 +900,6 @@ renderNotices();
                 notices.filter(
                     notice => favorites.includes(notice.sourceId)
                 ).length;
-
-            document
-                .getElementById("totalCount")
-                .textContent =
-                notices.length;
-
 
             document
                 .getElementById("openCount")
