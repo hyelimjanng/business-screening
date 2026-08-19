@@ -146,11 +146,11 @@
         .select-box {
             border: 1px solid var(--line);
 
-            background: rgba(255,255,255,0.96);
+            background-color: rgba(255,255,255,0.96);
 
             border-radius: 12px;
 
-            padding: 13px 15px;
+            padding: 13px 36px 13px 15px;
 
             font-size: 14px;
             color: var(--text-main);
@@ -159,6 +159,23 @@
                 0 5px 16px rgba(34, 50, 74, 0.04);
 
             outline: none;
+            cursor: pointer;
+
+            /* 기본 화살표 제거 */
+            appearance: none;
+            -webkit-appearance: none;
+
+            /* 직접 만든 화살표 */
+            background-image:
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235f6f86' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+
+            background-repeat: no-repeat;
+
+            /* ★ 화살표 위치 */
+            background-position:
+                right 14px center;
+
+            background-size: 12px;
         }
 
         .search-box {
@@ -302,6 +319,44 @@
             border: 1px solid #dfe5ec;
         }
 
+        .dday {
+            display: inline-block;
+            margin-left: 6px;
+            margin-bottom: 13px;
+
+            padding: 6px 10px;
+            border-radius: 20px;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            color: #6b7280;
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+        }
+
+        .dday.urgent {
+            color: #dc2626;
+            background: #fef2f2;
+            border-color: #fecaca;
+        }
+
+        .new-badge {
+            display: inline-block;
+            margin-left: 6px;
+            margin-bottom: 13px;
+
+            padding: 6px 10px;
+            border-radius: 20px;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            color: #a16207;
+            background: #fef9c3;
+            border: 1px solid #fde68a;
+        }
+
         .notice-card h3 {
             margin: 0 0 15px;
             font-size: 17px;
@@ -398,6 +453,60 @@
             color: #f5b800;
         }
 
+        .hide-btn {
+            margin-left: 6px;
+            padding: 4px 8px;
+
+            border: 1px solid #dfe5ec;
+            border-radius: 6px;
+
+            background: #ffffff;
+            color: #738096;
+
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .hide-btn:hover {
+            background: #f1f4f8;
+            color: #374151;
+        }
+
+        .hidden-toggle-btn {
+            padding: 13px 16px;
+
+            border: 1px solid #d9e0e8;
+            border-radius: 12px;
+
+            background: #f5f7f9;
+            color: #64748b;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            box-shadow:
+                0 5px 16px rgba(34, 50, 74, 0.04);
+
+            cursor: pointer;
+
+            transition:
+                background 0.2s ease,
+                border-color 0.2s ease,
+                color 0.2s ease;
+        }
+
+        .hidden-toggle-btn:hover {
+            background: #eef1f5;
+            border-color: #cbd5e1;
+            color: #475569;
+        }
+
+        .hidden-toggle-btn.active {
+            background: #e8edf3;
+            border-color: #c5cfda;
+            color: #334155;
+        }
+
         .update-info {
             margin-top: 24px;
             margin-bottom: 14px;
@@ -406,6 +515,48 @@
             font-weight: 400;
             color: var(--text-sub);
         }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+
+            padding: 24px 0 8px;
+        }
+
+        .page-btn {
+            min-width: 36px;
+            height: 36px;
+            padding: 0 10px;
+
+            border: 1px solid #dfe5ec;
+            border-radius: 9px;
+
+            background: #ffffff;
+            color: #64748b;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .page-btn:hover:not(:disabled) {
+            background: #f3f6fa;
+        }
+
+        .page-btn.active {
+            color: #ffffff;
+            background: #5f86d9;
+            border-color: #5f86d9;
+        }
+
+        .page-btn:disabled {
+            opacity: 0.4;
+            cursor: default;
+        }
+
 
     </style>
 </head>
@@ -454,6 +605,26 @@
                 <option value="컨설팅">컨설팅</option>
             </select>
 
+            <select id="sortFilter" class="select-box">
+                <option value="latest">최신 공고순</option>
+                <option value="deadline">마감 임박순</option>
+            </select>
+
+            <select id="pageSizeFilter" class="select-box">
+                <option value="10">10개 보기</option>
+                <option value="20">20개 보기</option>
+                <option value="30">30개 보기</option>
+            </select>
+
+            <button
+                type="button"
+                id="hiddenToggleBtn"
+                class="hidden-toggle-btn"
+                onclick="toggleHiddenView()"
+            >
+                숨긴 공고 보기
+            </button>
+
         </section>
 
         <main class="board">
@@ -490,6 +661,9 @@
         let notices = [];
         let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
         let currentView = "all";
+        let showHidden = false;
+        let hiddenNotices = JSON.parse(localStorage.getItem("hiddenNotices")) || [];
+        let currentPage = 1;
 
 
 function getStatus(item) {
@@ -660,7 +834,13 @@ async function loadNotices() {
                     getStatus(item),
 
                 period:
-                    `${item.apply_start || ""} ~ ${item.apply_end || ""}`,
+                    item.apply_start && item.apply_end
+                        ? `${item.apply_start} ~ ${item.apply_end}`
+                        : item.apply_end
+                            ? `~ ${item.apply_end}`
+                            : item.apply_start
+                                ? `${item.apply_start} ~`
+                                : "원문 확인",
 
                 target:
                     isG2B
@@ -690,12 +870,23 @@ async function loadNotices() {
                     item.source_id
                     || "",
 
+                key:
+                    `${item.source || "판판대로"}:${item.source_id || ""}`,
+
                 url:
                     item.url
                     || "",
 
                 noticeDate:
                     item.notice_date
+                    || "",
+
+                applyEnd:
+                    item.apply_end
+                    || "",
+
+                firstSeenAt:
+                    item.first_seen_at
                     || "",
 
                 organization:
@@ -737,12 +928,83 @@ async function loadNotices() {
 }
 
 
+function getDday(applyEnd) {
+
+    if (!applyEnd) {
+        return null;
+    }
+
+    const endDate = new Date(
+        applyEnd.replace(" ", "T")
+    );
+
+    if (isNaN(endDate.getTime())) {
+        return null;
+    }
+
+    const now = new Date();
+
+    const diff =
+        endDate.getTime()
+        - now.getTime();
+
+    if (diff < 0) {
+        return null;
+    }
+
+    const days = Math.ceil(
+        diff / (1000 * 60 * 60 * 24)
+    );
+
+    if (days === 0) {
+        return {
+            text: "D-DAY",
+            urgent: true
+        };
+    }
+
+    return {
+        text: `D-${days}`,
+        urgent: days < 10
+    };
+}
+
+function isNewNotice(firstSeenAt) {
+
+    if (!firstSeenAt) {
+        return false;
+    }
+
+    const firstSeen = new Date(
+        firstSeenAt.replace(" ", "T")
+    );
+
+    if (isNaN(firstSeen.getTime())) {
+        return false;
+    }
+
+    const now = new Date();
+
+    const diff =
+        now.getTime()
+        - firstSeen.getTime();
+
+    const threeDays =
+        3 * 24 * 60 * 60 * 1000;
+
+    return diff >= 0 && diff <= threeDays;
+}
+
+
         function createNoticeCard(notice) {
 
             const statusText =
                 notice.status === "open"
                 ? "모집중"
                 : "모집완료";
+
+            const dday = getDday(notice.applyEnd);
+            const isNew = isNewNotice(notice.firstSeenAt);
 
             return `
                 <article class="notice-card">
@@ -751,15 +1013,38 @@ async function loadNotices() {
                         ${statusText}
                     </span>
 
+                    ${dday ? `
+                        <span class="dday ${dday.urgent ? "urgent" : ""}">
+                            ${dday.text}
+                        </span>
+                    ` : ""}
+
+                    ${isNew ? `
+                        <span class="new-badge">
+                            NEW
+                        </span>
+                    ` : ""}
+
+
                     <h3>
                         ${notice.title}
+
                         <button
-                            class="favorite-btn ${favorites.includes(notice.sourceId) ? "active" : ""}"
-                            onclick="toggleFavorite('${notice.sourceId}')"
+                            class="favorite-btn ${favorites.includes(notice.key) ? "active" : ""}"
+                            onclick="toggleFavorite('${notice.key}')"
                             title="즐겨찾기"
-                        >
-                            ${favorites.includes(notice.sourceId) ? "★" : "☆"}
+                            >
+                                ${favorites.includes(notice.key) ? "★" : "☆"}
                         </button>
+
+                        <button
+                            class="hide-btn"
+                            onclick="toggleHidden('${notice.key}')"
+                            title="${hiddenNotices.includes(notice.key) ? "이 공고 복원" : "이 공고 숨기기"}"
+                        >
+                            ${hiddenNotices.includes(notice.key) ? "복원" : "숨김"}
+                        </button>
+                        
                     </h3>
 
                     <div class="meta">
@@ -777,25 +1062,20 @@ async function loadNotices() {
                     <div class="meta">
 
                         <span class="meta-label">
-                            지원대상
+                            공고기관
                         </span>
 
                         <span>
-                            ${notice.target}
+                            ${notice.organization || "정보 없음"}
                         </span>
 
                     </div>
 
-                    <span class="tag">
-                        ${notice.category}
-                    </span>
-
-                    <br>
-
                     <a
-                        href="#"
+                        href="${notice.url || '#'}"
                         class="detail-link"
-                        onclick="openOriginal('${notice.sourceId}'); return false;"
+                        target="_blank"
+                        rel="noopener noreferrer"
                     >
                         원문보기 →
                     </a>
@@ -820,6 +1100,117 @@ async function loadNotices() {
             renderNotices();
         }
 
+        function toggleHidden(sourceId) {
+
+            if (hiddenNotices.includes(sourceId)) {
+
+                hiddenNotices =
+                    hiddenNotices.filter(
+                        id => id !== sourceId
+                    );
+
+            } else {
+
+                hiddenNotices.push(sourceId);
+
+            }
+
+            localStorage.setItem(
+                "hiddenNotices",
+                JSON.stringify(hiddenNotices)
+            );
+
+            updateSummary();
+            renderNotices();
+        }
+
+        function toggleHiddenView() {
+
+            showHidden = !showHidden;
+            currentPage = 1;
+
+            const button =
+                document.getElementById("hiddenToggleBtn");
+
+            if (showHidden) {
+                button.textContent = "일반 공고 보기";
+                button.classList.add("active");
+            } else {
+                button.textContent = "숨긴 공고 보기";
+                button.classList.remove("active");
+            }
+
+            renderNotices();
+        }
+
+
+        function createPagination(
+            currentPage,
+            totalPages
+        ) {
+
+            if (totalPages <= 1) {
+                return "";
+            }
+
+            let pageButtons = "";
+
+            for (
+                let page = 1;
+                page <= totalPages;
+                page++
+            ) {
+
+                pageButtons += `
+                    <button
+                        type="button"
+                        class="page-btn ${page === currentPage ? "active" : ""}"
+                        onclick="goToPage(${page})"
+                    >
+                        ${page}
+                    </button>
+                `;
+            }
+
+            return `
+                <div class="pagination">
+
+                    <button
+                        type="button"
+                        class="page-btn nav"
+                        onclick="goToPage(${currentPage - 1})"
+                        ${currentPage === 1 ? "disabled" : ""}
+                    >
+                        이전
+                    </button>
+
+                    ${pageButtons}
+
+                    <button
+                        type="button"
+                        class="page-btn nav"
+                        onclick="goToPage(${currentPage + 1})"
+                        ${currentPage === totalPages ? "disabled" : ""}
+                    >
+                        다음
+                    </button>
+
+                </div>
+            `;
+        }
+
+
+        function goToPage(page) {
+
+            currentPage = page;
+
+            renderNotices();
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
 
         function renderNotices() {
 
@@ -834,6 +1225,17 @@ async function loadNotices() {
                     .getElementById("categoryFilter")
                     .value;
 
+            const sortValue =
+                document
+                    .getElementById("sortFilter")
+                    .value;
+
+            const pageSize =
+                Number(
+                    document
+                        .getElementById("pageSizeFilter")
+                        .value
+                );    
 
             const filteredNotices =
                 notices.filter(notice => {
@@ -850,15 +1252,93 @@ async function loadNotices() {
                     const matchesView =
                         currentView === "all"
                         || (currentView === "open" && notice.status === "open")
-                        || (currentView === "favorites" && favorites.includes(notice.sourceId));
+                        || (currentView === "favorites" && favorites.includes(notice.key));
 
-                    return matchesSearch && matchesCategory && matchesView;
+                    const matchesHidden =
+                        showHidden
+                            ? hiddenNotices.includes(notice.key)
+                            : !hiddenNotices.includes(notice.key);
+
+                    return (
+                        matchesSearch
+                        && matchesCategory
+                        && matchesView
+                        && matchesHidden
+                    );
                 });
 
 
             const openNotices =
                 filteredNotices.filter(
                     notice => notice.status === "open"
+                );
+
+            if (sortValue === "latest") {
+
+                openNotices.sort((a, b) => {
+
+                    const aDate = a.noticeDate
+                        ? new Date(a.noticeDate.replace(" ", "T"))
+                        : new Date(0);
+
+                    const bDate = b.noticeDate
+                        ? new Date(b.noticeDate.replace(" ", "T"))
+                        : new Date(0);
+
+                    return bDate - aDate;
+                });
+
+            }
+
+            if (sortValue === "deadline") {
+
+                openNotices.sort((a, b) => {
+
+                    const aEnd = a.applyEnd
+                        ? new Date(a.applyEnd.replace(" ", "T"))
+                        : null;
+
+                    const bEnd = b.applyEnd
+                        ? new Date(b.applyEnd.replace(" ", "T"))
+                        : null;
+
+                    // 마감일 없는 공고는 아래로
+                    if (!aEnd && !bEnd) {
+                        return 0;
+                    }
+
+                    if (!aEnd) {
+                        return 1;
+                    }
+
+                    if (!bEnd) {
+                        return -1;
+                    }
+
+                    return aEnd - bEnd;
+                });
+
+            }
+
+            const totalPages =
+                Math.ceil(
+                    openNotices.length / pageSize
+                );
+
+            if (currentPage > totalPages) {
+                currentPage = totalPages || 1;
+            }
+
+            const startIndex =
+                (currentPage - 1) * pageSize;
+
+            const endIndex =
+                startIndex + pageSize;
+
+            const visibleNotices =
+                openNotices.slice(
+                    startIndex,
+                    endIndex
                 );
 
             const openList =
@@ -868,9 +1348,15 @@ async function loadNotices() {
             if (openNotices.length > 0) {
 
                 openList.innerHTML =
-                    openNotices
+                    visibleNotices
                         .map(createNoticeCard)
                         .join("");
+
+                openList.innerHTML +=
+                    createPagination(
+                        currentPage,
+                        totalPages
+                    );
 
             } else {
 
@@ -898,7 +1384,7 @@ async function loadNotices() {
 
             const favoriteCount =
                 notices.filter(
-                    notice => favorites.includes(notice.sourceId)
+                    notice => favorites.includes(notice.key)
                 ).length;
 
             document
@@ -916,18 +1402,31 @@ async function loadNotices() {
 
         document
             .getElementById("searchInput")
-            .addEventListener(
-                "input",
-                renderNotices
-            );
-
+            .addEventListener("input", function () {
+                currentPage = 1;
+                renderNotices();
+            });
 
         document
             .getElementById("categoryFilter")
-            .addEventListener(
-                "change",
-                renderNotices
-            );
+            .addEventListener("change", function () {
+                currentPage = 1;
+                renderNotices();
+            });
+
+        document
+            .getElementById("sortFilter")
+            .addEventListener("change", function () {
+                currentPage = 1;
+                renderNotices();
+            });
+
+        document
+            .getElementById("pageSizeFilter")
+            .addEventListener("change", function () {
+                currentPage = 1;
+                renderNotices();
+            });
         
         document
             .querySelectorAll(".summary-card")
