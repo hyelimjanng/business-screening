@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-18 03:10",
+  "updated_at": "2026-08-19 03:14",
   "items": [
     {
       "source": "판판대로",
@@ -154,6 +154,18 @@
       "category": "유통∙판로",
       "region": "전라북도",
       "source_id": "202608040600",
+      "apply_possible": "Y",
+      "deadline_yn": "N"
+    },
+    {
+      "source": "판판대로",
+      "title": "2026년 스마트 플래그십 스토어 (소담상회 with LOTTE ON)",
+      "apply_start": "2026-08-19",
+      "apply_end": "2026-09-11",
+      "target": "소상공인",
+      "category": "인프라",
+      "region": "전국",
+      "source_id": "202603011200",
       "apply_possible": "Y",
       "deadline_yn": "N"
     },
