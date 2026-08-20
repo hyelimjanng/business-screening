@@ -749,62 +749,35 @@ async function loadNotices() {
 
     try {
 
-        const [
-            fanfandaeroResponse,
-            g2bResponse
-        ] = await Promise.all([
-            fetch(
-                "data.json",
-                {
-                    cache: "no-store"
-                }
-            ),
-            fetch(
-                "g2b_data.json",
-                {
-                    cache: "no-store"
-                }
-            )
-        ]);
+        const response = await fetch(
+            "data.json",
+            {
+                cache: "no-store"
+            }
+        );
 
 
-        if (!fanfandaeroResponse.ok) {
+        if (!response.ok) {
             throw new Error(
-                `data.json 불러오기 실패: ${fanfandaeroResponse.status}`
+                `data.json 불러오기 실패: ${response.status}`
             );
         }
 
 
-        if (!g2bResponse.ok) {
-            throw new Error(
-                `g2b_data.json 불러오기 실패: ${g2bResponse.status}`
-            );
-        }
+        const data =
+            await response.json();
 
 
-        const fanfandaeroData =
-            await fanfandaeroResponse.json();
-
-        const g2bData =
-            await g2bResponse.json();
-
-
-        const fanfandaeroItems =
-            Array.isArray(fanfandaeroData)
-                ? fanfandaeroData
-                : (fanfandaeroData.items || []);
-
-
-        const g2bItems =
-            Array.isArray(g2bData)
-                ? g2bData
-                : (g2bData.items || []);
+        const items =
+            Array.isArray(data)
+                ? data
+                : (data.items || []);
 
 
         const updatedAt =
-            g2bData.updated_at
-            || fanfandaeroData.updated_at
-            || "";
+            Array.isArray(data)
+                ? ""
+                : (data.updated_at || "");
 
 
         document
@@ -813,13 +786,7 @@ async function loadNotices() {
             updatedAt || "업데이트 정보 없음";
 
 
-        const allItems = [
-            ...fanfandaeroItems,
-            ...g2bItems
-        ];
-
-
-        notices = allItems.map(item => {
+        notices = items.map(item => {
 
             const isG2B =
                 item.source === "나라장터";
