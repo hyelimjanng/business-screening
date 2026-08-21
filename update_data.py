@@ -11,12 +11,22 @@ def run_script(script_name):
     print("=" * 70)
 
     result = subprocess.run(
-        [sys.executable, script_name]
+        [sys.executable, script_name],
+        capture_output=True,
+        text=True
     )
+
+    if result.stdout:
+        print(result.stdout)
+
+    if result.stderr:
+        print("----- 오류 출력 -----")
+        print(result.stderr)
 
     if result.returncode != 0:
         raise RuntimeError(
-            f"{script_name} 실행 실패"
+            f"{script_name} 실행 실패 "
+            f"(exit code: {result.returncode})"
         )
 
 
