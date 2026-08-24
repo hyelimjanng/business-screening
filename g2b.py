@@ -1,5 +1,7 @@
 import os
 import json
+import time
+
 from datetime import datetime, timedelta
 
 import requests
@@ -56,32 +58,67 @@ def fetch_page(page_no, start_text, end_text):
 
     request_url = f"{ENDPOINT}?serviceKey={API_KEY}"
 
-    response = requests.get(
-        request_url,
-        params=params,
-        timeout=30
-    )
+    max_retries = 3
 
-    response.raise_for_status()
 
-    data = response.json()
+    for attempt in range(1, max_retries + 1):
 
-    header = (
-        data
-        .get("response", {})
-        .get("header", {})
-    )
+        try:
 
-    if header.get("resultCode") != "00":
-        raise RuntimeError(
-            f"나라장터 API 오류: {header}"
-        )
+            response = requests.get(
+                request_url,
+                params=params,
+                timeout=30
+            )
 
-    return (
-        data
-        .get("response", {})
-        .get("body", {})
-    )
+            response.raise_for_status()
+
+            data = response.json()
+
+            header = (
+                data
+                .get("response", {})
+                .get("header", {})
+            )
+
+            if header.get("resultCode") != "00":
+                raise RuntimeError(
+                    f"나라장터 API 오류: {header}"
+                )
+
+            return (
+                data
+                .get("response", {})
+                .get("body", {})
+            )
+
+
+        except (
+            requests.exceptions.Timeout,
+            requests.exceptions.ConnectionError
+        ) as error:
+
+            print(
+                f"  ⚠ {page_no}페이지 요청 실패 "
+                f"({attempt}/{max_retries}): {error}"
+            )
+
+            if attempt == max_retries:
+                print(
+                    f"  ✖ {page_no}페이지 "
+                    "최종 요청 실패"
+                )
+                raise
+
+            wait_seconds = attempt * 10
+
+            print(
+                f"  → {wait_seconds}초 후 재시도합니다."
+            )
+
+            time.sleep(
+                wait_seconds
+            )
 
 
 # ============================================================
