@@ -1,6 +1,9 @@
 import json
 import os
 from datetime import datetime
+from zoneinfo import ZoneInfo
+
+KST = ZoneInfo("Asia/Seoul")
 
 
 # ============================================================
@@ -137,7 +140,7 @@ merged_items = list(
 output_data = {
 
     "updated_at":
-        datetime.now().strftime(
+        datetime.now(KST).strftime(
             "%Y-%m-%d %H:%M"
         ),
 

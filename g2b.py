@@ -3,10 +3,13 @@ import json
 import time
 
 from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 
 import requests
 import truststore
 from dotenv import load_dotenv
+
+KST = ZoneInfo("Asia/Seoul")
 
 
 # ============================================================
@@ -29,7 +32,7 @@ if not ENDPOINT:
 ROWS_PER_PAGE = 100
 DATA_FILE = "g2b_data.json"
 
-now = datetime.now()
+now = datetime.now(KST)
 
 
 # ============================================================

@@ -2,11 +2,15 @@ import time
 import json
 import os
 import truststore
+
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 truststore.inject_into_ssl()
 
 import requests
+
+KST = ZoneInfo("Asia/Seoul")
 
 
 URL = "https://fanfandaero.kr/portal/v2/selectSprtBizPbancListComp.do"
@@ -185,7 +189,7 @@ if not all_notices:
 # 신규 / 기존 공고 누적 갱신
 # ============================================================
 
-current_time = datetime.now().strftime(
+current_time = datetime.now(KST).strftime(
     "%Y-%m-%d %H:%M:%S"
 )
 
@@ -296,7 +300,7 @@ normalized_notices = list(
 
 output_data = {
     "updated_at":
-        datetime.now().strftime(
+        datetime.now(KST).strftime(
             "%Y-%m-%d %H:%M:%S"
         ),
 
